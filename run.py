@@ -25,14 +25,14 @@ def add_player_ships(board):
             column = randint(0, 4)   
         board[row][column] = "*"
 
-def add_computer_ships():
+def add_computer_ships(board):
     """
     Populates the the computer's board with ships in random locations.
     """
     for ship in range(5):
-        row = randint(0, 5)
-        column = randint(0, 5)
-        return row, column
+        row = randint(0, 4)
+        column = randint(0, 4)
+    return board[row][column]
 
 
 
@@ -75,22 +75,30 @@ def player_guess(board):
     
 
 def check_for_hits(board):
-    computer_ships = add_computer_ships()
-    guess = guess_row, guess_column
-    if guess != computer_ships:
+    
+    guess = board[guess_row][guess_column]
+    if guess == add_computer_ships(computer_board):
+        print("Congratulations you hit a ship!")
+        board[guess_row][guess_column] = "*"
+    else:
         print("You missed!") 
         board[guess_row][guess_column] = "X"
-        print_board(player_board)
-        print_board(computer_board)
-    else:
-        print("Congratulations you hit a ship!")
-        board[guess_row][guess_column] = "*"  
-        print_board(player_board) 
-        print_board(computer_board)
 
+    
 
-    new_round()
-
+def computer_guess(board):
+    row = randint(0, 4)
+    column = randint(0, 4)
+    if board[row][column] == ".":
+        print("Computer missed!")
+    elif board[row][column] == "X":
+        row = randint(0, 4)
+        column = randint(0, 4)
+    elif board[row][column] == "*":
+        print("Computer successfully landed a shot!")
+        board[row][column] = "X"
+    print_board(player_board) 
+    print_board(computer_board)
 
 
 def new_game():
@@ -102,5 +110,6 @@ def new_game():
 def new_round():
     player_guess(computer_board)
     check_for_hits(computer_board)
+    computer_guess(player_board)
 
 new_game()    
