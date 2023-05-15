@@ -9,6 +9,7 @@ from random import randint
 
 player_board = [["."] * 5 for x in range(5)]
 computer_board = [["."] * 5 for x in range(5)]
+hidden_board = [["."] * 5 for x in range(5)]
 
 def print_board(board):
     """
@@ -39,12 +40,13 @@ def add_computer_ships(board):
     for ship in range(5):
         row = randint(0, 4)
         column = randint(0, 4)
-        global ship_locations
-        ship_locations = board[row][column]
-    
-    
+        while board[row][column] =="@":
+            row = randint(0,4)
+            column = randint(0,4)
+        board[row][column] = "@"    
 
 
+computer_ship_locations = add_computer_ships(hidden_board)           
 
 
 def player_guess(board):
@@ -57,7 +59,8 @@ def player_guess(board):
         guess_row = input("Please enter a row between 0-4\n")
         while  guess_row not in "01234":
             print("Row must be between 0-4")
-            guess_row = input("Please enter a row between 0-4\n")   
+            guess_row = input("Please enter a row between 0-4\n")  
+            break 
     except ValueError:
         print("Input must be a number between 0-4")
         player_guess()
@@ -76,24 +79,24 @@ def player_guess(board):
     guess_row = int(guess_row)
     guess_column = int(guess_column)
 
-    if board[guess_row][guess_column] == "X":
+    if hidden_board[guess_row][guess_column] == "X":
         print("You already guessed those coordinates")
         player_guess(computer_board)
     elif board[guess_row][guess_column] == "*":
         print("You already guessed those coordinates")
         player_guess(computer_board)
     
-    
 
-def check_for_hits(board):
-    
-    guess = board[guess_row][guess_column]
-    if guess == ship_locations:
-        print("Congratulations you hit a ship!")
-        board[guess_row][guess_column] = "X"
+ 
+
+def check_for_hits(board,real_board):
+
+    if board[guess_row][guess_column] == "@":
+        print("Congratulations, you hit a battleship!")
+        real_board[guess_row][guess_column] = "X"
     else:
         print("You missed!") 
-        board[guess_row][guess_column] = "*"
+        real_board[guess_row][guess_column] = "*"   
 
     
 
@@ -108,20 +111,17 @@ def computer_guess(board):
     elif board[row][column] == "@":
         print("Computer successfully landed a shot!")
         board[row][column] = "X"
-    print_board(player_board) 
-    print_board(computer_board)
     new_round()
 
 def new_game():
     add_player_ships(player_board)
-    add_computer_ships(computer_board)
-    print_board(player_board)
-    print_board(computer_board)
     new_round()     
 
 def new_round():
-    player_guess(computer_board)
-    check_for_hits(computer_board)
+    print_board(player_board) 
+    print_board(computer_board)
+    guess_location = player_guess(computer_board)
+    check_for_hits(hidden_board, computer_board)
     computer_guess(player_board)
 
 new_game()    
