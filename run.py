@@ -1,5 +1,12 @@
 from random import randint
 
+# Legend
+# @ = friendly ship
+# . = empty/unknown space
+# X = hit ship
+# * = missed shot
+
+
 player_board = [["."] * 5 for x in range(5)]
 computer_board = [["."] * 5 for x in range(5)]
 
@@ -20,10 +27,10 @@ def add_player_ships(board):
     for ship in range(5):
         row = randint(0, 4)
         column = randint(0, 4)
-        while board[row][column] == "*":
+        while board[row][column] == "@":
             row = randint(0, 4)
             column = randint(0, 4)   
-        board[row][column] = "*"
+        board[row][column] = "@"
 
 def add_computer_ships(board):
     """
@@ -32,7 +39,10 @@ def add_computer_ships(board):
     for ship in range(5):
         row = randint(0, 4)
         column = randint(0, 4)
-    return board[row][column]
+        global ship_locations
+        ship_locations = board[row][column]
+    
+    
 
 
 
@@ -73,16 +83,17 @@ def player_guess(board):
         print("You already guessed those coordinates")
         player_guess(computer_board)
     
+    
 
 def check_for_hits(board):
     
     guess = board[guess_row][guess_column]
-    if guess == add_computer_ships(computer_board):
+    if guess == ship_locations:
         print("Congratulations you hit a ship!")
-        board[guess_row][guess_column] = "*"
+        board[guess_row][guess_column] = "X"
     else:
         print("You missed!") 
-        board[guess_row][guess_column] = "X"
+        board[guess_row][guess_column] = "*"
 
     
 
@@ -91,18 +102,19 @@ def computer_guess(board):
     column = randint(0, 4)
     if board[row][column] == ".":
         print("Computer missed!")
-    elif board[row][column] == "X":
-        row = randint(0, 4)
-        column = randint(0, 4)
-    elif board[row][column] == "*":
+        board[row][column] = "*"
+    elif board[row][column] == "X" or board[row][column] == "*":
+        computer_guess
+    elif board[row][column] == "@":
         print("Computer successfully landed a shot!")
         board[row][column] = "X"
     print_board(player_board) 
     print_board(computer_board)
-
+    new_round()
 
 def new_game():
     add_player_ships(player_board)
+    add_computer_ships(computer_board)
     print_board(player_board)
     print_board(computer_board)
     new_round()     
