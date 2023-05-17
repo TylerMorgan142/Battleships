@@ -11,6 +11,9 @@ player_board = [["."] * 5 for x in range(5)]
 computer_board = [["."] * 5 for x in range(5)]
 hidden_board = [["."] * 5 for x in range(5)]
 
+player_score = 0
+computer_score = 0
+
 def print_board(board):
     """
     Prints the board where the game will take place.
@@ -43,10 +46,7 @@ def add_computer_ships(board):
         while board[row][column] =="@":
             row = randint(0,4)
             column = randint(0,4)
-        board[row][column] = "@"    
-
-
-computer_ship_locations = add_computer_ships(hidden_board)           
+        board[row][column] = "@"              
 
 
 def player_guess(board):
@@ -56,28 +56,25 @@ def player_guess(board):
     
     try:
         global guess_row
-        guess_row = input("Please enter a row between 0-4\n")
-        while  guess_row not in "01234":
+        guess_row = int(input("Please enter a row between 0-4\n"))
+        while  guess_row not in range(0, 5):
             print("Row must be between 0-4")
-            guess_row = input("Please enter a row between 0-4\n")  
+            guess_row = int(input("Please enter a row between 0-4\n"))
             break 
     except ValueError:
         print("Input must be a number between 0-4")
-        player_guess()
+        player_guess(computer_board)
     
     try:
         global guess_column
-        guess_column = input("Please enter a column between 0-4\n")
-        while  guess_column not in "01234":
+        guess_column = int(input("Please enter a column between 0-4\n"))
+        while  guess_column not in range(0, 5):
             print("Column must be between 0-4")
-            guess_column = input("Please enter a column between 0-4\n")
+            guess_column = int(input("Please enter a column between 0-4\n"))
                
     except ValueError:
         print("Input must be a number between 0-4")
         player_guess(computer_board)
-   
-    guess_row = int(guess_row)
-    guess_column = int(guess_column)
 
     if hidden_board[guess_row][guess_column] == "X":
         print("You already guessed those coordinates")
@@ -94,10 +91,11 @@ def check_for_hits(board,real_board):
     if board[guess_row][guess_column] == "@":
         print("Congratulations, you hit a battleship!")
         real_board[guess_row][guess_column] = "X"
+        increment_player_score()
     else:
         print("You missed!") 
         real_board[guess_row][guess_column] = "*"   
-
+        
     
 
 def computer_guess(board):
@@ -107,21 +105,42 @@ def computer_guess(board):
         print("Computer missed!")
         board[row][column] = "*"
     elif board[row][column] == "X" or board[row][column] == "*":
-        computer_guess
+        computer_guess(player_board)
     elif board[row][column] == "@":
         print("Computer successfully landed a shot!")
         board[row][column] = "X"
-    new_round()
+        increment_computer_score()
+    
+
+def increment_player_score():
+    global player_score
+    player_score += 1
+    
+        
+
+def increment_computer_score():
+    global computer_score
+    computer_score += 1
+        
 
 def new_game():
     add_player_ships(player_board)
+    add_computer_ships(hidden_board)
     new_round()     
 
 def new_round():
-    print_board(player_board) 
-    print_board(computer_board)
-    guess_location = player_guess(computer_board)
-    check_for_hits(hidden_board, computer_board)
-    computer_guess(player_board)
-
+    while player_score < 5 and computer_score < 5:
+        print(f"Player score = {player_score}")
+        print(f"Computer score = {computer_score}")
+        print_board(player_board) 
+        print_board(computer_board)
+        player_guess(computer_board)
+        check_for_hits(hidden_board, computer_board)
+        computer_guess(player_board)
+    if player_score == 5:
+            print("Congratulations, you sunk all the computer's battleships!")
+            print("Thanks for playing")
+    elif computer_score == 5:
+            print("Game Over! The computer sunk all of your battleships!")
+            print("Thanks for playing")
 new_game()    
