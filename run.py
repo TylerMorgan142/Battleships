@@ -51,7 +51,8 @@ def add_computer_ships(board):
 
 def player_guess(board):
     """
-    Gets the players input for their guess of a row and column.
+    Gets the players input for their guess of a row and column
+    Asks the user to retry if their input is invalid
     """
     
     try:
@@ -87,6 +88,10 @@ def player_guess(board):
  
 
 def check_for_hits(board,real_board):
+    """
+    Compares the user's guess to a hidden board that stores the computer's ship locations
+    Marks the location as either hit or miss on the board the player can see
+    """
 
     if board[guess_row][guess_column] == "@":
         print("Congratulations, you hit a battleship!")
@@ -99,6 +104,9 @@ def check_for_hits(board,real_board):
     
 
 def computer_guess(board):
+    """
+    Gets the computer's guess by randonmly generating coordinates on the player's board
+    """
     row = randint(0, 4)
     column = randint(0, 4)
     if board[row][column] == ".":
@@ -113,22 +121,36 @@ def computer_guess(board):
     
 
 def increment_player_score():
+    """
+    Increases the player's score by 1
+    """
     global player_score
     player_score += 1
     
         
 
 def increment_computer_score():
+    """
+    Increases the computer's score by 1
+    """
     global computer_score
     computer_score += 1
         
 
 def new_game():
+    """
+    Starts a new game
+    """
     add_player_ships(player_board)
     add_computer_ships(hidden_board)
     new_round()     
 
 def new_round():
+    """
+    Starts a new round of guessing
+    Stops the game if the player's or computer's ships 
+    have all been destroyed
+    """ 
     while player_score < 5 and computer_score < 5:
         print(f"Player score = {player_score}")
         print(f"Computer score = {computer_score}")
