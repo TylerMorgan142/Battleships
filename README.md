@@ -52,3 +52,33 @@ All code passes through the [Code Institute PEP8 Validator](https://pep8ci.herok
 
 The program produces the expected results when inputs are entered including invalid inputs.
 
+
+## Deployment
+
+This project was deployed to Heroku at the [this location](https://dashboard.heroku.com/apps/battleships-project-ci)
+
+The steps for deployment are as follows:
+
+1. Sign up for Heroku
+
+2. Go to the dashboard and create a new app
+
+3. Give the app a name and assign it a region, then click "create appp".
+
+4. In the settings page give the app a config var with a key of "PORT" and a value of "8000"
+
+5. Still in settings, add two buildpacks, Python and Node.js, making sure they are added in that order.
+
+6. In the deployment page, the app is connected to my github account and repository.
+
+This app automatically deploys itself when any new code is pushed to Github.
+
+## Credits
+
+### Knowledge Mavens
+
+I used [this youtube video](https://www.youtube.com/watch?v=tF1WRCrd_HQ&t=746s) to help with the function for adding ships to the boards.
+
+### Code Institute
+
+This project uses a Code Institute gitpod templace [found here](https://github.com/Code-Institute-Org/python-essentials-template) 
