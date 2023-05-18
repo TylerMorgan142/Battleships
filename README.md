@@ -46,3 +46,9 @@ When the player makes inputs, they can see the location they guessed and the loc
 
 Successful hits are marked a "X" and misses are marked as "*"
 
+## Testing
+
+All code passes through the [Code Institute PEP8 Validator](https://pep8ci.herokuapp.com/) without any issues.
+
+The program produces the expected results when inputs are entered including invalid inputs.
+

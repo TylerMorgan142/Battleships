@@ -33,6 +33,7 @@ def add_player_ships(board):
     """
     Populates the the player's board with ships in random locations.
     """
+    # Code taken from "Knowledge Mavens" Youtube video, credits in readme.
     for ship in range(5):
         row = randint(0, 4)
         column = randint(0, 4)
@@ -46,6 +47,7 @@ def add_computer_ships(board):
     """
     Populates the the computer's board with ships in random locations.
     """
+    # Code taken from "Knowledge Mavens" Youtube video, credits in readme.
     for ship in range(5):
         row = randint(0, 4)
         column = randint(0, 4)
@@ -178,5 +180,6 @@ def new_round():
         print_board(player_board)
         print_board(computer_board)
         print("Draw! All battleships were sunk on both sides")
+
 
 new_game()
