@@ -170,6 +170,7 @@ def new_round():
     elif computer_score == 5:
         print("Game Over! The computer sunk all of your battleships!")
         print("Thanks for playing")
-
+    elif player_score and computer_score == 5:
+        print("Draw! All battleships were sunk on both sides")
 
 new_game()
