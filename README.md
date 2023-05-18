@@ -55,7 +55,7 @@ The program produces the expected results when inputs are entered including inva
 
 ## Deployment
 
-This project was deployed to Heroku at the [this location](https://dashboard.heroku.com/apps/battleships-project-ci)
+This project was deployed to Heroku at the [this location](https://battleships-project-ci.herokuapp.com/)
 
 The steps for deployment are as follows:
 
