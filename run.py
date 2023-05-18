@@ -165,12 +165,18 @@ def new_round():
         check_for_hits(hidden_board, computer_board)
         computer_guess(player_board)
     if player_score == 5:
+        print_board(player_board)
+        print_board(computer_board)
         print("Congratulations, you sunk all the computer's battleships!")
         print("Thanks for playing")
     elif computer_score == 5:
+        print_board(player_board)
+        print_board(computer_board)
         print("Game Over! The computer sunk all of your battleships!")
         print("Thanks for playing")
     elif player_score and computer_score == 5:
+        print_board(player_board)
+        print_board(computer_board)
         print("Draw! All battleships were sunk on both sides")
 
 new_game()
